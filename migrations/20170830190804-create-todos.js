@@ -8,13 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        allowNull: false,
+      todo: {
         type: Sequelize.STRING
       },
       yetTodo: {
         type: Sequelize.BOOLEAN
-        default: false
       },
       createdAt: {
         allowNull: false,
