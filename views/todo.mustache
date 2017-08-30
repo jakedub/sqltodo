@@ -19,6 +19,7 @@
     <li>
       <form action="/complete" method="post">
         <button type="submit" name="marked" value="{{todo}}">Mark as Complete</button>
+        <a href="/todo/{{todo}}/edit">edit</a>
       {{todo}}
       </form>
     </li>
@@ -32,6 +33,7 @@
     <li>
       {{todo}}
       <form class="delete-todo" method="post" action="/completed/{{todo}}/delete"><button type="submit">Delete</button></form>
+      <a href="/todo/{{todo}}/edit">edit</a>
     </li>
     {{/yetTodo}}
   </ul>

@@ -98,7 +98,7 @@ router.post('/completed', function(req,res){
 });
 
 const getTodo = function (req, res, next) {
-    models.Todos.findById(req.params.todo).then(function (link) {
+    models.Todos.findById(req.params.todo).then(function (check) {
         if (check) {
             req.todo = todo;
             next();
@@ -109,7 +109,7 @@ const getTodo = function (req, res, next) {
 }
 
 //editing...doesn't work
-router.post("/todo/:todoId", getTodo, function (req, res) {
+router.post("/todo", getTodo, function (req, res) {
     req.checkBody("todo").notEmpty();
 
     const todoData = {
