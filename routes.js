@@ -75,12 +75,13 @@ router.post('/todos', function(req,res) {
 //   })
 // })
 
+//marking for completed...doesn't work
 router.post('/completed', function(req,res){
   req.checkBody('todo', 'You must include a todo.').notEmpty();
-  let id = req.body.id;
+  let id = req.body.todo;
   let todoData = {yetTodo: false};
 
-  models.Todos.findById(id).then(function (check){
+  models.Todos.findById(todo).then(function (check){
     if (check){
       req.getValidationResult().then(function (result){
         if (result.isEmpty()){
@@ -95,7 +96,49 @@ router.post('/completed', function(req,res){
   })
 });
 
+const getTodo = function (req, res, next) {
+    models.Todos.findById(req.params.todo).then(function (link) {
+        if (check) {
+            req.todo = todo;
+            next();
+        } else {
+            res.status(404).send('Not found.');
+        }
+    })
+}
+
+//editing...doesn't work
+router.post("/todo/:todoId", getTodo, function (req, res) {
+    req.checkBody("todo").notEmpty();
+
+    const todoData = {
+        todo: req.body.todo,
+        yetTodo: req.body.yetTodo
+    };
+
+    req.getValidationResult().then(function (result) {
+        if (result.isEmpty()) {
+            req.todo.update(todoData).then(function (newTodo) {
+                res.redirect("/");
+            });
+        } else {
+            const errors = result.mapped();
+            res.render("todo", {
+                todo: todoData,
+                errors: errors,
+                action: "/todo/" + req.todo.id,
+                buttonText: "Update"
+            });
+        }
+    });
+});
 
 
+// delete
+router.post("/todos/:todosId/delete", getTodo, function (req, res) {
+    req.Todos.destroy().then(function () {
+        res.redirect("/");
+    });
+});
 
 module.exports = router;

@@ -31,6 +31,7 @@
     {{^yetTodo}}
     <li>
       {{todo}}
+      <form class="delete-todo" method="post" action="/completed/{{todo}}/delete"><button type="submit">Delete</button></form>
     </li>
     {{/yetTodo}}
   </ul>
