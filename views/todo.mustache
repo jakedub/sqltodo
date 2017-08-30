@@ -32,7 +32,7 @@
     {{^yetTodo}}
     <li>
       {{todo}}
-      <form class="delete-todo" method="post" action="/completed/{{todo}}/delete"><button type="submit">Delete</button></form>
+      <form class="delete" method="post" action="/todo/{{todo}}/delete"><button type="submit">Delete</button></form>
       <a href="/todo/{{todo}}/edit">edit</a>
     </li>
     {{/yetTodo}}

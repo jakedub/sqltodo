@@ -136,7 +136,7 @@ router.post("/todo", getTodo, function (req, res) {
 
 
 // delete
-router.post("/todos/:todosId/delete", getTodo, function (req, res) {
+router.post("/todos/delete", getTodo, function (req, res) {
     req.Todos.destroy().then(function () {
         res.redirect("/");
     });
