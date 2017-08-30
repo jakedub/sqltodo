@@ -2,70 +2,59 @@ const express = require('express');
 const router = express.Router();
 const models = require("./models");
 
-//To Do List
-// const list = [
-//   {
-//     todo: "Wash the dishes",
-//     yetTodo: true
-//   }, {
-//     todo: "Cut grass",
-//     yetTodo: false
-//   }, {
-//     todo: "Get dog food",
-//     yetTodo:true
-//   }, {
-//     todo: "Pick up",
-//     yetTodo:false
-//   }
-// ];
-//
-// const data = {
-//   todos:list
-// };
 
 router.get('/', function (req, res) {
-  res.render("todo", data);
+  res.render("todo");
 });
 
 
-router.post("/", function(req,res){
-  list.push({todo: req.body.todo, yetTodo:true});
-  res.redirect("/")
-});
-
-router.post("/todos", function (req, res) {
+router.post("/todo", function (req, res) {
     req.checkBody("title", "You must include a title.").notEmpty();
-    req.checkBody("yetTodo", "Your URL is invalid.").notEmpty();
 
-    const linkData = {
-        title: req.body.title,
-        yetTodo: req.body.yetTodo,
-    };
+    const todoData = {title: req.body.title, yetTodo: true};
 
     req.getValidationResult().then(function (result) {
         if (result.isEmpty()) {
-            models.Todo.create(linkData).then(function (link) {
+            models.Todo.create(todoData).then(function (todo) {
                 res.redirect("/");
             });
         } else {
-            const todo = models.Todo.build(linkData);
+            const todo = models.Todo.build(todoData);
             const errors = result.mapped();
-            res.render("form", {
+            res.render("todo", {
                 errors: errors,
-                link: link
+                todo: todo
             })
         }
     })
 });
 
+const getData = function (req, res, next) {
+    models.Todo.findById(req.params.todoId).then(function (link) {
+        if (todos) {
+            req.body.todo = todos;
+            next();
+        } else {
+            res.status(200).send('Not found.');
+        }
+    })
+}
 
-router.post("/completed", function(req,res){
-  console.log(req.body);
-  let completed =req.body.marked;
-function findItems(item){
-  return item.todo ===completed;}
-  list.find(findItems).yetTodo= false;
-  res.redirect("/");
+// router.post("/completed", function(req,res){
+//   console.log(req.body);
+//   let completed =req.body.marked;
+// function findItems(item){
+//   return item.todo ===completed;}
+//   list.find(findItems).yetTodo= false;
+//   res.redirect("/");
+// });
+
+router.post('/completed', function (req,res){
+  let completed = models.Todo.build({title: req.body.title, yetTodo: true});
+  todo.save().then(function(newTodo){
+    res.render('todo', newTodo);
+  });
 });
+
 
 module.exports = router;

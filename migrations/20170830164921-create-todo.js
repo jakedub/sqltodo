@@ -9,10 +9,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       yetTodo: {
         type: Sequelize.BOOLEAN
+        default: false
       },
       createdAt: {
         allowNull: false,
