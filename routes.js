@@ -32,6 +32,16 @@ router.post('/todos', function(req,res) {
 //   });
 // });
 
+// router.post('/completed', function(req,res){
+//   let completed = req.body.marked;
+//   let id = req.body.id;
+//   models.Todos.findbyId(id).then(function (){
+//     return models.Todos.save(yetTodo = true);
+//     res.redirect('/')
+//   })
+// })
+
+
 
 router.post('/completed', function (req,res){
   let completed = req.body.marked;
