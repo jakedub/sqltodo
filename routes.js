@@ -78,10 +78,7 @@ router.post('/todos', function(req,res) {
 router.post('/completed', function(req,res){
   req.checkBody('todo', 'You must include a todo.').notEmpty();
   let id = req.body.id;
-  let todoData = {
-      todo: req.body.todo,
-      yetTodo: false
-  };
+  let todoData = {yetTodo: false};
 
   models.Todos.findById(id).then(function (check){
     if (check){
