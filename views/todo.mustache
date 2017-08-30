@@ -4,10 +4,11 @@
 <head>
   <meta charset="utf-8">
   <title>Do these things</title>
+  <link rel="stylesheet" type="text/css" href="./css/style.css" />
 </head>
 <body>
-  <h1>Todo List</h1>
-  <form action="/" method="post">
+  <h1>I Pity The Fool Who Doesn't Complete These</h1>
+  <form action="/todos" method="post">
     <input type="text" name="todo" />
     <button type="submit">Create Todo</button>
   </form>
@@ -23,7 +24,7 @@
     {{/yetTodo}}
     {{/todos}}
   </ul>
-  <h1>Completed things</h1>
+  <h1>Items Beneath You</h1>
   <ul>
     {{#todos}}
     {{^yetTodo}}

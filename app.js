@@ -11,7 +11,8 @@ const morgan = require("morgan");
 app.engine('mustache', mustacheExpress());
 app.set('views', './views');
 app.set('view engine', 'mustache');
-app.use("/css", express.static("public"));
+
+app.use("/css", express.static("./public"));
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(expressValidator());

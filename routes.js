@@ -9,7 +9,7 @@ router.get('/', function (req, res) {
 //todos is all that is returned. Index action
 router.get('/todos', function(req,res){
   models.Todos.findAll().then(function(todos){
-    res.render('todos', {todos: todos})
+    res.render('todo', {todos: todos})
   });
 });
 
@@ -23,5 +23,24 @@ router.post('/todos', function(req,res) {
     res.redirect('/todos');
   });
 });
+
+// router.post('/completed', function (req, res){
+//   let completed = req.body.marked;
+//   models.Todos.create(todo).then(function(marked){
+//     models.Todos.find(marked).yetTodo = false;
+//     res.redirect('/todos');
+//   });
+// });
+
+
+router.post('/completed', function (req,res){
+  let completed = req.body.marked;
+  let id = req.body.id;
+  models.Todos.findbyId(id).then(function someName(marked){
+    models.Todos.save(someName).yetTodo = false;
+  })
+  res.redirect('/');
+  });
+
 
 module.exports = router;
