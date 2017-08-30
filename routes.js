@@ -41,16 +41,64 @@ router.post('/todos', function(req,res) {
 //   })
 // })
 
+//og code that works
+// app.post("/completed", function(req,res){
+//   console.log(req.body);
+//   let completed =req.body.marked;
+// function findItems(item){
+//   return item.todo ===completed;}
+//   list.find(findItems).yetTodo= false;
+//   res.redirect("/");
+// });
+//
+//doesn't work
+// router.post('/completed', function (req,res){
+//   let completed = req.body.marked;
+//   let id = req.body.id;
+//   models.Todos.findbyId(id).then(function someName(marked){
+//     models.Todos.save(someName).yetTodo = false;
+//   })
+//   res.redirect('/');
+//   });
+//also didn't work
+// router.post('/completed', function(req,res){
+//   let completed = req.body.marked;
+//   let id = req.body.todo;
+//   models.Todos.findbyId(id)
+//   .then(function(check){
+//     if(completed){
+//       yetTodo:true;
+//     } else{
+//       console.log("this is an error");
+//     }
+//     res.redirect("/");
+//   })
+// })
 
-
-router.post('/completed', function (req,res){
-  let completed = req.body.marked;
+router.post('/completed', function(req,res){
+  req.checkBody('todo', 'You must include a todo.').notEmpty();
   let id = req.body.id;
-  models.Todos.findbyId(id).then(function someName(marked){
-    models.Todos.save(someName).yetTodo = false;
+  let todoData = {
+      todo: req.body.todo,
+      yetTodo: false
+  };
+
+  models.Todos.findById(id).then(function (check){
+    if (check){
+      req.getValidationResult().then(function (result){
+        if (result.isEmpty()){
+          check.update(todoData).then(function (newTodo){
+            res.redirect('/');
+          })
+        } else {
+          res.status(404).send("Not found.");
+        }
+      })
+    }
   })
-  res.redirect('/');
-  });
+});
+
+
 
 
 module.exports = router;

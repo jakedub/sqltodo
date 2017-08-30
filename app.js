@@ -22,5 +22,5 @@ app.use(routes);
 app.use(morgan('dev'))
 
 app.listen(3000, function () {
-    console.log('Preparing to mark boxes.')
+    console.log('Oooph')
 });
