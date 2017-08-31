@@ -9,7 +9,7 @@
 <body>
   <div class="wrapper">
   <h1>I Pity The Fool Who Doesn't Complete These</h1>
-  <form action="/todos" method="post">
+  <form action="/todo" method="post">
     <input type="text" name="todo" />
     <button type="submit">Create Todo</button>
   </form>
@@ -17,10 +17,10 @@
     {{#todos}}
     {{#yetTodo}}
     <li>
-      <form action="/complete" method="post">
+      <form action="/todo" method="post">
         <button type="submit" name="marked" value="{{todo}}">Mark as Complete</button>
-        <a href="/todo/{{todo}}/edit">edit</a>
-        <form class="delete" method="post" action="/todo/{{todo}}/delete"><button type="submit">Delete</button></form>
+        <a href="/todo">edit</a>
+        <form class="delete" method="post" action="/todos/delete"><button type="submit">Delete</button></form>
       {{todo}}
       </form>
     </li>

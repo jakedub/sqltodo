@@ -7,20 +7,20 @@ router.get('/', function (req, res) {
   res.render("todo");
 });
 //todos is all that is returned. Index action
-router.get('/todos', function(req,res){
+router.get('/todo', function(req,res){
   models.Todos.findAll().then(function(todos){
     res.render('todo', {todos: todos})
   });
 });
 
 // create action
-router.post('/todos', function(req,res) {
+router.post('/todo', function(req,res) {
   let todo = {
     todo: req.body.todo,
     yetTodo: true
   };
   models.Todos.create(todo).then(function(promise){
-    res.redirect('/todos');
+    res.redirect('/todo');
   });
 });
 
@@ -74,16 +74,27 @@ router.post('/todos', function(req,res) {
 //     res.redirect("/");
 //   })
 // })
+const getTodo = function (req, res, next) {
+    models.Todos.findById(req.params.todoId).then(function (check) {
+        if (check) {
+            req.todo = todo;
+            next();
+        } else {
+            res.status(404).send('Not found.');
+        }
+    })
+}
+
 
 //marking for completed...doesn't work
-router.post('/completed', function(req,res){
+router.post('/todo/:todoId', function(req,res){
   req.checkBody('todo', 'You must include a todo.').notEmpty();
-  let id = req.body.todo;
+  let id = req.body.id;
   let todoData = {yetTodo: false};
   let completed = req.body.marked;
 
-  models.Todos.findById(todo).then(function (check){
-    if (check === completed){
+  models.Todos.findById(id).then(function (check){
+    if (id === completed){
       req.getValidationResult().then(function (result){
         if (result.isEmpty()){
           check.update(todoData).then(function (newTodo){
@@ -97,16 +108,7 @@ router.post('/completed', function(req,res){
   })
 });
 
-const getTodo = function (req, res, next) {
-    models.Todos.findById(req.params.todo).then(function (check) {
-        if (check) {
-            req.todo = todo;
-            next();
-        } else {
-            res.status(404).send('Not found.');
-        }
-    })
-}
+
 
 //editing...doesn't work
 router.post("/todo", getTodo, function (req, res) {
@@ -135,9 +137,19 @@ router.post("/todo", getTodo, function (req, res) {
 });
 
 
+// .catch(function(err){
+//   console.log("no and then");
+//   console.log(err.errors.map(function(error){
+//     if (error.path === "email"{)
+//     return `{error.value} is not a valid email`
+//   } else {
+//     return "Unknown error"
+//   }));
+// })
+
 // delete
-router.post("/todos/delete", getTodo, function (req, res) {
-    req.Todos.destroy().then(function () {
+router.post("/todo/:todo/delete", getTodo, function (req, res) {
+    req.todo.destroy().then(function () {
         res.redirect("/");
     });
 });
