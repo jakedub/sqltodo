@@ -55,7 +55,7 @@ router.post("/todo/:id/edit", function(req,res){
   console.log("Do you see me?");
   let input = req.body.newTodo;
   models.Todos.findById(req.params.id).then(function(edit){
-    edit.update(input).then(function(){
+    req.edit.update(input).then(function(){
       res.redirect('/todo');
     })
   })
