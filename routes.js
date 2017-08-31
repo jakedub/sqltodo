@@ -24,133 +24,50 @@ router.post('/todo', function(req,res) {
   });
 });
 
-// router.post('/completed', function (req, res){
-//   let completed = req.body.marked;
-//   models.Todos.create(todo).then(function(marked){
-//     models.Todos.find(marked).yetTodo = false;
-//     res.redirect('/todos');
-//   });
-// });
-
-// router.post('/completed', function(req,res){
-//   let completed = req.body.marked;
-//   let id = req.body.id;
-//   models.Todos.findbyId(id).then(function (){
-//     return models.Todos.save(yetTodo = true);
-//     res.redirect('/')
-//   })
-// })
-
-//og code that works
-// app.post("/completed", function(req,res){
-//   console.log(req.body);
-//   let completed =req.body.marked;
-// function findItems(item){
-//   return item.todo ===completed;}
-//   list.find(findItems).yetTodo= false;
-//   res.redirect("/");
-// });
-//
-//doesn't work
-// router.post('/completed', function (req,res){
-//   let completed = req.body.marked;
-//   let id = req.body.id;
-//   models.Todos.findbyId(id).then(function someName(marked){
-//     models.Todos.save(someName).yetTodo = false;
-//   })
-//   res.redirect('/');
-//   });
-//also didn't work
-// router.post('/completed', function(req,res){
-//   let completed = req.body.marked;
-//   let id = req.body.todo;
-//   models.Todos.findbyId(id)
-//   .then(function(check){
-//     if(completed){
-//       yetTodo:true;
-//     } else{
-//       console.log("this is an error");
-//     }
-//     res.redirect("/");
-//   })
-// })
-const getTodo = function (req, res, next) {
-    models.Todos.findById(req.params.todoId).then(function (check) {
-        if (check) {
-            req.todo = todo;
-            next();
-        } else {
-            res.status(404).send('Not found.');
-        }
-    })
-}
+// const getTodo = function (req, res, next) {
+//     models.Todos.findById(req.body.todo).then(function (check) {
+//         if (check) {
+//             req.todo = todo;
+//             next();
+//         } else {
+//             res.status(404).send('Not found.');
+//         }
+//     })
+// }
 
 
-//marking for completed...doesn't work
-router.post('/todo/:todoId', function(req,res){
-  req.checkBody('todo', 'You must include a todo.').notEmpty();
-  let id = req.body.id;
+//marking for completed
+router.post('/complete', function(req,res){
+  let id = req.body.marked;
   let todoData = {yetTodo: false};
   let completed = req.body.marked;
 
-  models.Todos.findById(id).then(function (check){
-    if (id === completed){
-      req.getValidationResult().then(function (result){
-        if (result.isEmpty()){
-          check.update(todoData).then(function (newTodo){
-            res.redirect('/');
-          })
-        } else {
-          res.status(404).send("Not found.");
-        }
-      })
-    }
+models.Todos.findById(id).then(function (check){
+    check.update(todoData).then(function(){
+      res.redirect('/todo')
+    })
   })
 });
 
 
-
 //editing...doesn't work
-router.post("/todo", getTodo, function (req, res) {
-    req.checkBody("todo").notEmpty();
+router.post("/todo/:id/edit", function(req,res){
+  console.log("Do you see me?");
+  let input = req.body.newTodo;
+  models.Todos.findById(req.params.id).then(function(edit){
+    edit.update(input).then(function(){
+      res.redirect('/todo');
+    })
+  })
+})
 
-    const todoData = {
-        todo: req.body.todo,
-        yetTodo: req.body.yetTodo
-    };
-
-    req.getValidationResult().then(function (result) {
-        if (result.isEmpty()) {
-            req.todo.update(todoData).then(function (newTodo) {
-                res.redirect("/");
-            });
-        } else {
-            const errors = result.mapped();
-            res.render("todo", {
-                todo: todoData,
-                errors: errors,
-                action: "/todo/" + req.todo.id,
-                buttonText: "Update"
-            });
-        }
-    });
-});
-
-
-// .catch(function(err){
-//   console.log("no and then");
-//   console.log(err.errors.map(function(error){
-//     if (error.path === "email"{)
-//     return `{error.value} is not a valid email`
-//   } else {
-//     return "Unknown error"
-//   }));
-// })
 
 // delete
-router.post("/todo/:todo/delete", getTodo, function (req, res) {
-    req.todo.destroy().then(function () {
-        res.redirect("/");
+router.post("/todo/:id/delete", function (req, res) {
+  models.Todos.findById(req.params.id).then(function(todo){
+    todo.destroy().then(function () {
+        res.redirect("/todo");
+      })
     });
 });
 

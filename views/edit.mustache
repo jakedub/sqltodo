@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Edit This Thingy</title>
+  <link rel="stylesheet" type="text/css" href="./css/style.css" />
+</head>
+<body>
+  <div class="wrapper">
+  <h1>Edit This Thing</h1>
+    {{#todos}}
+    <form action="/todo/edit" method="post">
+      <input type="text" name="newTodo" value={{id}} />
+      <button type="submit">Save the Edit</button>
+    </form>
+    {{/todos}}
+</div>
+</body>
+</html>

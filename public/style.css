@@ -3,6 +3,7 @@ li{
   list-style-type: none;
   color: green;
   font-weight: bold;
+  padding: 10px;
 }
 
 .marked{
@@ -17,7 +18,7 @@ h1{
 .wrapper{
   background-image: url('https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ5Nzg2MTgwMl5BMl5BanBnXkFtZTcwNTA0NjcxMw@@._V1_UY317_CR0,0,214,317_AL_.jpg');
   background-repeat: no-repeat;
-  background-size: 700px;
+  background-size: 900px;
   margin: auto;
   padding-left: 10px;
   padding-top: 10px;
@@ -26,4 +27,31 @@ h1{
 body{
   margin: 0 auto;
   padding-left: 50px;
+}
+
+.marked{
+  background-color: green;
+  width: 80px;
+}
+
+.edit{
+  padding-left: 5px;
+  padding-right: 5px;
+  font-style: italic;
+  text-decoration: none;
+  background: rgba(0,0,225,0.2)
+}
+
+.delete{
+  padding-top: 3px;
+}
+
+.delete button{
+  background-color: gray;
+}
+
+.word{
+  font-size: 20px;
+  box-sizing: border-box;
+  background: rgba(0,128,0,0.2);
 }
