@@ -40,7 +40,6 @@ router.post('/todo', function(req,res) {
 router.post('/complete', function(req,res){
   let id = req.body.marked;
   let todoData = {yetTodo: false};
-  let completed = req.body.marked;
 
 models.Todos.findById(id).then(function (check){
     check.update(todoData).then(function(){
@@ -50,16 +49,23 @@ models.Todos.findById(id).then(function (check){
 });
 
 
-//editing...doesn't work
-router.post("/todo/:id/edit", function(req,res){
-  console.log("Do you see me?");
-  let input = req.body.newTodo;
-  models.Todos.findById(req.params.id).then(function(edit){
-    req.edit.update(input).then(function(){
-      res.redirect('/todo');
-    })
-  })
+//Editing...doesn't work
+//render edit page
+router.get('/todo/:id', function(req,res){
+  res.render('edit');
 })
+
+//Edit update
+router.post("/todo/:id", function(req,res){
+  console.log("Do you see me?");
+  let input = req.body.todo;
+  models.Todos.findById(req.params.id).then(function(edit){
+    edit.update({todo: input}).then(function(){
+      res.redirect('/todo');
+    });
+  });
+});
+
 
 
 // delete

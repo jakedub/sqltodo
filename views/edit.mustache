@@ -10,8 +10,8 @@
   <div class="wrapper">
   <h1>Edit This Thing</h1>
     {{#todos}}
-    <form action="/todo/{{id}}/edit" method="post">
-      <input type="text" name="newTodo" value={{id}} />
+    <form action="/todo/{{id}}" method="post">
+      <input type="text" name="todo" value={{}} placeholder="The New Todo" autofocus/>
       <button type="submit">Save the Edit</button>
     </form>
     {{/todos}}
