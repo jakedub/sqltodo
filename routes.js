@@ -50,21 +50,20 @@ models.Todos.findById(id).then(function (check){
 
 
 //Editing...doesn't work
-//render edit page
-router.get('/todo/:id', function(req,res){
-  res.render('edit');
-})
 
 //Edit update
-router.post("/todo/:id", function(req,res){
-  console.log("Do you see me?");
-  let input = req.body.todo;
-  models.Todos.findById(req.params.id).then(function(edit){
-    edit.update({todo: input}).then(function(){
-      res.redirect('/todo');
-    });
-  });
+router.get('/todo/:id', function(req,res){
+  res.render('edit', {id: req.params.id})
 });
+
+router.post('/todo/:id', function(req,res){
+  models.Todos.findById(req.params.id).then(function(edit){
+    edit.update({todos:req.body.todo}).then(function(){
+      res.redirect("/todo");
+    })
+  })
+})
+
 
 
 
